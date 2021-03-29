@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit"> 
+    <title>登录</title>  
+    <link rel="stylesheet" href="css/pintuer.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/pintuer.js"></script>  
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <div style="height:30px;"></div>
+            <div class="media media-y margin-big-bottom">           
+            </div>         
+            <!-- <form action="#" method="post"> -->
+            <div class="panel loginbox">
+                <div class="text-center margin-big padding-big-top"><h1>楼盘管理系统</h1></div>
+                <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+                    <div class="form-group">
+                        <div class="field field-icon-right">
+                            <input type="text" id="username" class="input input-big" name="name" placeholder="登录账号" data-validate="required:请填写账号" />
+                            <span class="icon icon-user margin-small"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field field-icon-right">
+                            <input type="password" id="password" class="input input-big" name="password" placeholder="登录密码" data-validate="required:请填写密码" />
+                            <span class="icon icon-key margin-small"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field">
+                            <input type="text" class="input input-big" name="code" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码" />
+                           <img src="images/passcode.jpg" alt="" width="100" height="32" class="passcode" style="height:43px;cursor:pointer;" onclick="this.src=this.src+'?'">  
+                                                   
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field text-center">
+                           <input type="radio" id="RadioButtonList1_0" name="RadioButtonList1" value="客户" />    
+                           <label for="RadioButtonList1_0">客户</label>   
+                           
+                           <input type="radio" id="RadioButtonList1_1" name="RadioButtonList1" value="管理员" />    
+                           <label for="RadioButtonList1_1">管理员</label>  
+                        </div>
+                    </div>
+                </div>
+                <!-- <div style="padding:30px;"><input type="submit" class="button button-block bg-main text-big input-big" value="登录" onclick="return check()"></div> -->
+                <div style="padding:30px;"><button class="button button-block bg-main text-big input-big" value="登录" onclick="return check()">登陆</button></div>
+                <div class="text-center" style="padding: 0 30px 30px 30px">还没有账号？<ins><a target="_blank" href="addClient.jsp?x=0">立即注册</a></ins></div>
+            </div>
+            <!-- </form>           -->
+            
+        </div>
+    </div>
+</div>
+<script>
+    
+    
+    function check() {
+
+        if ($("#username").val() === "" || $("#password").val() === "") {
+            alert("请输入您的用户名或密码！");
+        } else {
+        
+            var type = $("input[name='RadioButtonList1']:checked").val();
+            if (type == "客户") {
+                $.post(
+                    "loginClient",  // 参数1：传递url
+                    {               // 参数2：传递参数
+                        username: $("#username").val(),
+                        password: $("#password").val()
+                    },
+                    function (result) { // 参数3：回调函数
+                        if (result > 0) { // 用户名或密码正确
+                            // window.location.href = "index.html?id=" + result;   // 跳转
+                            window.location.href = "client.jsp?id=" + result;  // 跳转
+                        } else {    // 用户名或密码错误
+                            alert("用户名或密码错误！"); // 登陆失败，重试
+                        }
+                    }
+                )
+            } else if (type == "管理员") {
+                $.post(
+                    "loginManage",  // 参数1：传递url
+                    {               // 参数2：传递参数
+                        username: $("#username").val(),
+                        password: $("#password").val()
+                    },
+                    function (result) { // 参数3：回调函数
+                        var row = parseInt(result);
+                        if (result > 0) { // 用户名或密码正确
+                            window.location.href = "manage.html";   // 跳转
+                        } else {    // 用户名或密码错误
+                            alert("用户名或密码错误！"); // 登陆失败，重试
+                        }
+                    }
+                )
+            } else {
+                alert("请选择您是客户还是管理员……");
+            }
+        }
+    }
+</script>
+</body>
+</html>

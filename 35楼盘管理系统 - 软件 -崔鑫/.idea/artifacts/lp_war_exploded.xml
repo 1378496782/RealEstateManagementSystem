@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="lp:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/lp_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="lp" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="E:/DOWN/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="lp/web/Web" />
+    </root>
+  </artifact>
+</component>
